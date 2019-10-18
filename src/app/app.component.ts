@@ -4,7 +4,6 @@ import { State } from "./store/reducers";
 import { address_ } from "./store/reducers/profile.reducer";
 import { PostalAddress } from "./models/postal-address";
 import { AddressActions } from "./store/actions";
-import { clone } from "./utils/clone";
 import { map } from "rxjs/operators";
 
 @Component({
@@ -13,18 +12,11 @@ import { map } from "rxjs/operators";
   styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-  address$ = this.store.pipe(
-    select(address_),
-    map(address => clone(address))
-  );
+  address$ = this.store.pipe(select(address_));
 
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {}
-
-  onValueChanges(address: Partial<PostalAddress>): void {
-    this.store.dispatch(AddressActions.update({ address }));
-  }
 
   onSave(address: Partial<PostalAddress>): void {
     this.store.dispatch(AddressActions.save({ address }));

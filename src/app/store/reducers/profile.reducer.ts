@@ -11,24 +11,32 @@ import { AddressActions } from "../actions";
 export const profileFeatureKey = "profile";
 
 export interface State {
-  loaded: boolean;
+  loading: boolean;
   address: PostalAddress;
 }
 
 export const initialState: State = {
-  loaded: false,
+  loading: false,
   address: null
 };
 
 const ngrxFormReducer = createReducer(
   initialState,
-  on(AddressActions.loadSuccess, (state, { address }) => ({
+  on(AddressActions.load, AddressActions.save, state => ({
     ...state,
-    address
+    loading: true
   })),
-  on(AddressActions.update, (state, { address }) => ({
+  on(
+    AddressActions.loadSuccess,
+    AddressActions.saveSuccess,
+    (state, { address }) => ({
+      ...state,
+      address
+    })
+  ),
+  on(AddressActions.saveError, (state, { error }) => ({
     ...state,
-    address: { ...state.address, ...address }
+    error
   }))
 );
 
