@@ -1,0 +1,3 @@
+<app-address-form [address]="address$ | async"  (save)="onSave($event)"></app-address-form>
+
+<button mat-raised-button (click)="onLoadAddress()">Load Address</button>

@@ -1,0 +1,8 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+app-address-form  {
+  margin-bottom: 15px;
+}

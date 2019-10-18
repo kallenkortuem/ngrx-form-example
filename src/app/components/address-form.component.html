@@ -1,0 +1,35 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+	<ng-container>
+		<mat-form-field formGroupName="address">
+			<mat-label>Address</mat-label>
+			<input type="text" matInput formControlName="0" />
+			<mat-error *ngIf="form.get('address.0').getError('required')">
+				<span class="sr-only">Error: </span>This field is required</mat-error>
+			<mat-error *ngIf="form.get('address.0').getError('maxlength')">
+				<span class="sr-only">Error: </span>Maximum of 35 characters
+			</mat-error>
+		</mat-form-field>
+	</ng-container>
+
+	<mat-form-field>
+		<mat-label>City</mat-label>
+		<input type="text" matInput formControlName="city" />
+		<mat-error *ngIf="form.get('city').getError('required')">
+			<span class="sr-only">Error: </span>This field is required
+		</mat-error>
+	</mat-form-field>
+
+
+	<mat-form-field class="width-fix">
+		<mat-label>Zip code</mat-label>
+		<input type="text" matInput formControlName="postalCode" mask="00000" />
+		<mat-error *ngIf="form.get('postalCode').getError('required')">
+			<span class="sr-only">Error: </span>This field is required
+		</mat-error>
+		<mat-error *ngIf="form.get('postalCode').getError('pattern')">
+			<span class="sr-only">Error: </span>Invalid zip code
+		</mat-error>
+	</mat-form-field>
+
+	<button type="submit" mat-raised-button color="primary" [disabled]="form.pristine">Save</button>
+</form>
