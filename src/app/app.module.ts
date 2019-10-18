@@ -13,7 +13,6 @@ import { StoreRouterConnectingModule } from "@ngrx/router-store";
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { AppComponent } from "./app.component";
-import { ProfileComponent } from "./containers/profile.component";
 import { reducers } from "./store/reducers";
 import { debug } from "./utils/debug";
 import { effects } from "./store/effects";
@@ -33,7 +32,7 @@ import { effects } from "./store/effects";
     StoreModule.forRoot(reducers, { metaReducers: [debug] }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: false })
   ],
-  declarations: [AppComponent, ProfileComponent],
+  declarations: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

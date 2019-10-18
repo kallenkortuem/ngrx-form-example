@@ -14,6 +14,7 @@ import { PostalAddress } from "../models/postal-address";
 import { Subject } from "rxjs";
 import { takeUntil, debounceTime, skip } from "rxjs/operators";
 import { FormGroupOf } from "../utils/form-group-of";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: 'app-address-form',
@@ -31,6 +32,8 @@ export class AddressFormComponent implements OnChanges {
   });
 
   @Input() address: PostalAddress;
+  @Input() error: HttpErrorResponse;
+  @Input() loading: string;
   @Output() save = new EventEmitter<Partial<PostalAddress>>();
 
   ngOnChanges(changes: SimpleChanges): void {

@@ -7,17 +7,20 @@ import {
   on
 } from "@ngrx/store";
 import { AddressActions } from "../actions";
+import { HttpErrorResponse } from "@angular/common/http";
 
 export const profileFeatureKey = "profile";
 
 export interface State {
   loading: boolean;
   address: PostalAddress;
+  error: HttpErrorResponse;
 }
 
 export const initialState: State = {
   loading: false,
-  address: null
+  address: null,
+  error: null
 };
 
 const ngrxFormReducer = createReducer(
@@ -29,10 +32,10 @@ const ngrxFormReducer = createReducer(
   on(
     AddressActions.loadSuccess,
     AddressActions.saveSuccess,
-    (state, { address }) => ({
-      ...state,
-      address
-    })
+    (state, action) => {
+      const address = { ...state.address, ...action.address };
+      return { ...state, loading: false, address };
+    }
   ),
   on(AddressActions.saveError, (state, { error }) => ({
     ...state,
@@ -50,3 +53,13 @@ export const address_ = createSelector(
   profileState_,
   state => state && state.address
 );
+
+export const loading_ = createSelector(
+  profileState_,
+  state => state && state.loading
+)
+
+export const error_ = createSelector(
+  profileState_,
+  state => state && state.error
+)

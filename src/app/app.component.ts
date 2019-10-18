@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { State } from "./store/reducers";
-import { address_ } from "./store/reducers/profile.reducer";
+import { address_, error_, loading_ } from "./store/reducers/profile.reducer";
 import { PostalAddress } from "./models/postal-address";
 import { AddressActions } from "./store/actions";
+import { HttpErrorResponse } from "@angular/common/http";
 import { map } from "rxjs/operators";
 
 @Component({
@@ -13,10 +14,10 @@ import { map } from "rxjs/operators";
 })
 export class AppComponent {
   address$ = this.store.pipe(select(address_));
+  error$ = this.store.pipe(select(error_));
+  loading$ = this.store.pipe(select(loading_));
 
   constructor(private store: Store<State>) {}
-
-  ngOnInit(): void {}
 
   onSave(address: Partial<PostalAddress>): void {
     this.store.dispatch(AddressActions.save({ address }));
@@ -24,5 +25,14 @@ export class AppComponent {
 
   onLoadAddress(): void {
     this.store.dispatch(AddressActions.load());
+  }
+
+  // for demo purposes only
+  fakeSaveWithErrors(): void {
+    this.store.dispatch(
+      AddressActions.saveError({ error: {
+        statusText: 'Fake Internal Server Error Message'
+      } as HttpErrorResponse })
+    );
   }
 }
