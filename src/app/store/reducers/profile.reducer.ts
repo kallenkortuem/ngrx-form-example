@@ -27,14 +27,15 @@ const ngrxFormReducer = createReducer(
   initialState,
   on(AddressActions.load, AddressActions.save, state => ({
     ...state,
-    loading: true
+    loading: true,
+    error: null
   })),
   on(
     AddressActions.loadSuccess,
     AddressActions.saveSuccess,
     (state, action) => {
       const address = { ...state.address, ...action.address };
-      return { ...state, loading: false, address };
+      return { ...state, loading: false, error: null, address };
     }
   ),
   on(AddressActions.saveError, (state, { error }) => ({
@@ -57,9 +58,9 @@ export const address_ = createSelector(
 export const loading_ = createSelector(
   profileState_,
   state => state && state.loading
-)
+);
 
 export const error_ = createSelector(
   profileState_,
   state => state && state.error
-)
+);
